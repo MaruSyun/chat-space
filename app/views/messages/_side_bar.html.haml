@@ -1,0 +1,18 @@
+.side-bar
+  .chat-header
+    .chat-header__box
+      .chat-header__box__username
+        maru
+      %ul.chat-header__box__menu-icon
+        %li.chat-header__box__menuicon__edit
+          = link_to '#' do
+            = icon('fas', 'edit')
+        %li.chat-header__box__menuicon__new-group
+          = link_to '#' do
+            = icon('fas', 'cog')
+  .groups
+    .list
+      .list__group-name
+        techchamp
+      .list__message
+        まだメッセージがありません
