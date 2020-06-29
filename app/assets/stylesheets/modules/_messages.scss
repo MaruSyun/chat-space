@@ -37,12 +37,22 @@
     font-weight: bold;
     .list {
       margin-bottom: 40px;
+      text-decoration: none;
+      a {
+        text-decoration: none;
+      }
       &__group-name {
         font-size: 15px;
+        color: #ffffff;
+        text-decoration: none;
       }
       &__message {
         font-size: 11px;
         margin-top: 5px;
+        color: #ffffff;
+        a {
+          text-decoration: none;
+        }
       }
     }
   }
