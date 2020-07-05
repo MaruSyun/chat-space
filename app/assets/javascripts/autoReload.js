@@ -2,7 +2,7 @@ $(function(){
   function buildHTML(message){
     if (message.image){
       let html =
-        `<div class="messages__box1">
+        `<div class="messages__box1" data-message-id=${message.id}>
           <div class="messages__box1__name-time">
             <div class="messages__box1__name-time__name">
               ${message.user_name}
@@ -21,7 +21,7 @@ $(function(){
       return html;
     } else {
       let html =
-        `<div class="messages__box1">
+        `<div class="messages__box1" data-message-id=${message.id}>
           <div class="messages__box1__name-time">
             <div class="messages__box1__name-time__name">
               ${message.user_name}
@@ -40,24 +40,28 @@ $(function(){
     };
   }
 
-  $(".new-message").on('submit', function(e){
-    e.preventDefault();
-    let formData = new FormData(this);
-    let url = $(this).attr('action');
+  let reloadMessages = function(){
+    let last_message_id = $('.messages__box1:last').data("message-id");
     $.ajax({
-      url: url,
-      type: "POST",
-      data: formData,
-      dataType: 'json',
-      processData: false,
-      contentType: false
+      url: "api/messages",
+      type: "GET",
+      data: {id: last_message_id},
+      dataType: 'json'
     })
-    .done(function(data){
-      let html = buildHTML(data);
-      $('.messages').append(html);
-      $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight});
-      $('form')[0].reset();
-      $('.submit-btn').prop('disabled', false);
+    .done(function(messages){
+      if (messages.length !== 0){
+        let insertHTML = '';
+        $.each(messages, function(i, message){
+          insertHTML += buildHTML(message)
+        });
+        $('.messages').append(insertHTML);
+        $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight});
+      }
     })
-  });
+    .fail(function(){
+      alert('error');
+    });
+  };
+
+  setInterval(reloadMessages, 7000);
 });
