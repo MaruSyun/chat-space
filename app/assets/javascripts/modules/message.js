@@ -59,5 +59,8 @@ $(function(){
       $('form')[0].reset();
       $('.submit-btn').prop('disabled', false);
     })
+    .fail(function(){
+      alert("メッセージを入れてください");
+    })
   });
 });
